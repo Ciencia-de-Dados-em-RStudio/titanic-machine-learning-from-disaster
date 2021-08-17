@@ -128,25 +128,90 @@ x.bit_length()
 #help(x.bit_length)
 # this command causes error in R and reticulate() -> help function!!
 
+#The examples above were utterly obscure. None of the types of objects we've looked at so far (numbers, functions, booleans) have attributes or methods you're likely ever to use.
+#But it turns out that lists have several methods which you'll use all the time.
+#List methods
+#list.append modifies a list by adding an item to the end:
+
+# Pluto is a planet darn it!
+planets.append('Pluto')
+
+#Why does the cell above have no output? Let's check the documentation by calling help(planets.append).
+#Aside: append is a method carried around by all objects of type list, not just planets, so we also could have called help(list.append). 
+#However, if we try to call help(append), Python will complain that no variable exists called "append". 
+#The "append" name only exists within lists - it doesn't exist as a standalone name like builtin functions such as max or len.
+
+#help(planets.append)
+
+#The -> None part is telling us that list.append doesn't return anything.
+#But if we check the value of planets, we can see that the method call modified the value of planets:
+planets
+
+#list.pop removes and returns the last element of a list:
+
+planets.pop()
+#'Pluto'
+planets
+#['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+
+#Searching lists
+#Where does Earth fall in the order of planets? We can get its index using the list.index method.
+
+planets.index('Earth')
+#2
+#It comes third (i.e. at index 2 - 0 indexing!).
+#At what index does Pluto occur?
+planets.index('Pluto')
+#ValueError: 'Pluto' is not in list
+
+$Oh, that's right...
+#To avoid unpleasant surprises like this, we can use the in operator to determine whether a list contains a particular value:
+
+# Is Earth a planet?
+"Earth" in planets
+#True
+
+## Is Calbefraques a planet?
+"Calbefraques" in planets
+#False
+
+#There are a few more interesting list methods we haven't covered.
+#If you want to learn about all the methods and attributes attached to a particular object, we can call help() on the object itself.
+#For example, help(planets) will tell us about all the list methods:
+help(planets)
 
 
+#Click the "output" button to see the full help page. 
+#Lists have lots of methods with weird-looking names like __eq__ and __iadd__. Don't worry too much about these for now. 
+#(You'll probably never call such methods directly. 
+#But they get called behind the scenes when we use syntax like indexing or comparison operators.)
+#The most interesting methods are toward the bottom of the list (append, clear, copy, etc.).
 
+#Tuples
+#Tuples are almost exactly the same as lists. They differ in just two ways.
+#1: The syntax for creating them uses parentheses instead of square brackets
+t = (1, 2, 3)
+t = 1, 2, 3 # equivalent to above
+t
+#2: They cannot be modified (they are immutable).
+t[0] = 100
+#TypeError: 'tuple' object does not support item assignment
+#Tuples are often used for functions that have multiple return values.
+#For example, the as_integer_ratio() method of float objects returns a numerator and a denominator in the form of a tuple:
+x = 0.125
+x.as_integer_ratio()
+(1, 8)
 
+#These multiple return values can be individually assigned as follows:
+numerator, denominator = x.as_integer_ratio()
+print(numerator / denominator)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Finally we have some insight into the classic Stupid Python Trick™ for swapping two variables!
+a = 1
+b = 0
+a, b = b, a
+print(a, b)
+#0 1
 
 
 
